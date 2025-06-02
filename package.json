@@ -1,5 +1,5 @@
 {
-  "name": "serverless-esbuild",
+  "name": "@surya/serverless-esbuild",
   "version": "0.0.0-development",
   "description": "Serverless plugin for zero-config JavaScript and TypeScript code bundling using extremely fast esbuild",
   "keywords": [
