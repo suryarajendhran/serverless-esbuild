@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { Predicate } from 'effect';
 import type { BuildOptions } from 'esbuild';
-import * as pkg from 'esbuild';
+import { build } from 'esbuild';
 import fs from 'fs-extra';
 import pMap from 'p-map';
 import path from 'path';
@@ -105,19 +105,7 @@ export async function bundle(this: EsbuildServerlessPlugin): Promise<void> {
       outdir: path.join(buildDirPath, path.dirname(entry)),
     };
 
-    type ContextFn = (opts: typeof options) => Promise<BuildContext>;
-    type WithContext = typeof pkg & { context?: ContextFn };
-    const context = buildOptions.skipRebuild ? undefined : await (pkg as WithContext).context?.(options);
-
-    let result;
-    if (!buildOptions.skipRebuild) {
-      result = await context?.rebuild();
-      if (!result) {
-        result = await pkg.build(options);
-      }
-    } else {
-      result = await pkg.build(options);
-    }
+    const result = await build(options);
 
     if (config.metafile) {
       fs.writeFileSync(
@@ -126,7 +114,7 @@ export async function bundle(this: EsbuildServerlessPlugin): Promise<void> {
       );
     }
 
-    return { bundlePath, entry, result, context };
+    return { bundlePath, entry, result };
   };
 
   // Files can contain multiple handlers for multiple functions, we want to get only the unique ones
