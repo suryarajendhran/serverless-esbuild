@@ -1,5 +1,5 @@
 {
-  "name": "@surya/serverless-esbuild",
+  "name": "@suryarajendhran/serverless-esbuild-memory-fix",
   "version": "0.0.0-development",
   "description": "Serverless plugin for zero-config JavaScript and TypeScript code bundling using extremely fast esbuild",
   "keywords": [
